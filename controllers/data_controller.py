@@ -14,14 +14,15 @@ router = APIRouter()
 @router.get(
     "/data/get",
     tags=['data'],
+    response_model=NsfwSchema,
     summary='',
     description=''
 )
 def search_data(
-    search: str = Query(..., description="Search text"),
+    search: str = Query(None, description="Search text"),
     page: int = Query(1, gt=0, description="Page number"),
     limit: int = Query(20, gt=0, le=100, description="Number of results per page"),
 ):
-    data = NSFWService(Session()).get_all()
+    data = NSFWService(Session()).get_all(search, page, limit)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(data))
