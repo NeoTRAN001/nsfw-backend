@@ -9,12 +9,12 @@ from sqlalchemy.ext.declarative import declarative_base
 
 load_dotenv(".env")
 
-database_url = 'postgresql+psycopg2://{}:{}@{}:{}/{}?ssl=true'.format(
-    os.getenv('DB_USERNAME'),
-    os.getenv('DB_PASSWORD'),
-    os.getenv('HOST'),
-    os.getenv('DB_PORT'),
-    os.getenv('DATABASE')
+database_url: str = 'postgresql://{}:{}@{}:{}/{}'.format(
+    str(os.getenv('DB_USERNAME')),
+    str(os.getenv('DB_PASSWORD')),
+    str(os.getenv('HOST')),
+    str(os.getenv('DB_PORT')),
+    str(os.getenv('DATABASE'))
 )
 engine: Engine = create_engine(database_url)
 Session: sessionmaker = sessionmaker(bind=engine)
